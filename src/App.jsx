@@ -19,7 +19,13 @@ import CuratorDashboard from './pages/Dashboards/CuratorDashboard';
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return null;
+  if (loading) return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ textAlign: 'center', opacity: 0.5 }}>
+        <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', letterSpacing: '0.2em' }}>Loading...</p>
+      </div>
+    </div>
+  );
   if (!user) return <Navigate to="/login" />;
   if (role && user.role !== role) return <Navigate to="/" />;
 

@@ -94,7 +94,7 @@ const initialArtworks = [
 ];
 
 export const GalleryProvider = ({ children }) => {
-    const [artworks, setArtworks] = useState([]);
+    const [artworks, setArtworks] = useState(initialArtworks);
     const [cart, setCart] = useState(() => {
         const savedCart = localStorage.getItem('art_gallery_cart');
         return savedCart ? JSON.parse(savedCart) : [];
