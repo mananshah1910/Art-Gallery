@@ -8,6 +8,16 @@ const STAFF_CREDENTIALS = {
     password: '123456',
     role: 'admin',
     name: 'Manan Shah'
+  },
+  'curator@artvista.art': {
+    password: 'curator123',
+    role: 'curator',
+    name: 'Sarah Jenkins'
+  },
+  'artist@artvista.art': {
+    password: 'artist123',
+    role: 'artist',
+    name: 'Elena Vance'
   }
 };
 
