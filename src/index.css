@@ -41,6 +41,69 @@
   --glass-bg: rgba(10, 14, 20, 0.9);
 }
 
+/* ── Gallery Themes (Curator-selectable) ── */
+
+[data-theme='minimalist'] {
+  --color-bg: #fafafa;
+  --color-text: #111111;
+  --color-text-muted: #777;
+  --color-accent: #111111;
+  --color-white: #ffffff;
+  --color-border: #e0e0e0;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --font-serif: 'Inter', sans-serif;
+}
+
+[data-theme='baroque'] {
+  --color-bg: #1c1209;
+  --color-text: #f0e2c4;
+  --color-text-muted: #b09870;
+  --color-accent: #c9a84c;
+  --color-white: #2a1e10;
+  --color-border: #3d2c17;
+  --glass-bg: rgba(28, 18, 9, 0.85);
+}
+
+[data-theme='digital-echo'] {
+  --color-bg: #050d1a;
+  --color-text: #00f5ff;
+  --color-text-muted: #4da6b3;
+  --color-accent: #7b2fff;
+  --color-white: #0a1628;
+  --color-border: #0d2137;
+  --glass-bg: rgba(5, 13, 26, 0.9);
+}
+
+[data-theme='surrealist'] {
+  --color-bg: #fdf5e6;
+  --color-text: #2c1654;
+  --color-text-muted: #7b5ea7;
+  --color-accent: #e85d9c;
+  --color-white: #fff8f0;
+  --color-border: #e8cfe8;
+  --glass-bg: rgba(253, 245, 230, 0.85);
+}
+
+[data-theme='neo-classical'] {
+  --color-bg: #f4efe8;
+  --color-text: #2c2416;
+  --color-text-muted: #7a6a50;
+  --color-accent: #8b5e3c;
+  --color-white: #fff9f0;
+  --color-border: #d9cfc0;
+  --glass-bg: rgba(244, 239, 232, 0.85);
+}
+
+[data-theme='abstract'] {
+  --color-bg: #1a0a2e;
+  --color-text: #f0f0f0;
+  --color-text-muted: #9a8bb5;
+  --color-accent: #ff6b35;
+  --color-white: #2d1a4a;
+  --color-border: #3d2860;
+  --glass-bg: rgba(26, 10, 46, 0.88);
+}
+
 * {
   margin: 0;
   padding: 0;

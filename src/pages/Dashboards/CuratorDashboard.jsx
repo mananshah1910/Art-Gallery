@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useGallery } from '../../context/GalleryContext';
 import { useAuth } from '../../context/AuthContext';
-import { Layers, BookOpen, Award, Plus, Eye, BarChart2, Compass, PenTool, CheckCircle } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import { Layers, BookOpen, Award, Plus, Eye, BarChart2, Compass, PenTool, CheckCircle, Palette, RotateCcw } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AddArtworkForm from '../../components/AddArtworkForm';
 import AddExhibitionForm from '../../components/AddExhibitionForm';
@@ -9,9 +10,19 @@ import AddExhibitionForm from '../../components/AddExhibitionForm';
 const CuratorDashboard = () => {
     const { user } = useAuth();
     const { artworks, exhibitions, approveArtwork } = useGallery();
+    const { galleryTheme, setGalleryTheme } = useTheme();
     const [showArtForm, setShowArtForm] = useState(false);
     const [showExhibitionForm, setShowExhibitionForm] = useState(false);
     const [activeTab, setActiveTab] = useState('overview');
+
+    const GALLERY_THEMES = [
+        { id: 'minimalist', label: 'Minimalist', color: '#111', bg: '#fafafa', description: 'Clean, stripped-back purity' },
+        { id: 'baroque', label: 'Baroque', color: '#c9a84c', bg: '#1c1209', description: 'Dark gold drama & opulence' },
+        { id: 'digital-echo', label: 'Digital Echo', color: '#7b2fff', bg: '#050d1a', description: 'Neon cyberpunk glow' },
+        { id: 'surrealist', label: 'Surrealist', color: '#e85d9c', bg: '#fdf5e6', description: 'Dreamy & otherworldly' },
+        { id: 'neo-classical', label: 'Neo-Classical', color: '#8b5e3c', bg: '#f4efe8', description: 'Timeless earthy elegance' },
+        { id: 'abstract', label: 'Abstract', color: '#ff6b35', bg: '#1a0a2e', description: 'Bold violet & fire' },
+    ];
 
     const pendingArt = artworks.filter(a => a.status === 'pending');
     const approvedArt = artworks.filter(a => a.status === 'approved');
@@ -206,25 +217,64 @@ const CuratorDashboard = () => {
                             <h3 style={{ marginBottom: '1.5rem', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
                                 <Award size={18} /> Gallery Themes
                             </h3>
-                            <div style={{ padding: '2rem', background: 'var(--color-white)', border: '1px solid var(--color-border)', borderRadius: '8px', marginBottom: '1.5rem' }}>
-                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '1.5rem' }}>
-                                    {['Minimalist', 'Baroque', 'Digital Echo', 'Surrealist', 'Neo-Classical', 'Abstract'].map(theme => (
-                                        <span key={theme} style={{
-                                            padding: '5px 14px',
-                                            border: '1px solid var(--color-border)',
-                                            borderRadius: '20px',
-                                            fontSize: '0.78rem',
-                                            cursor: 'pointer',
-                                            transition: 'all 0.2s ease',
-                                            fontWeight: '500'
-                                        }}>
-                                            {theme}
-                                        </span>
+                            <div style={{ padding: '1.5rem', background: 'var(--color-white)', border: '1px solid var(--color-border)', borderRadius: '8px', marginBottom: '1.5rem' }}>
+                                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '1.2rem', lineHeight: '1.5' }}>
+                                    Select a theme to apply it across the entire gallery instantly.
+                                </p>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', marginBottom: '1.2rem' }}>
+                                    {GALLERY_THEMES.map(t => (
+                                        <motion.button
+                                            key={t.id}
+                                            whileHover={{ scale: 1.03 }}
+                                            whileTap={{ scale: 0.97 }}
+                                            onClick={() => setGalleryTheme(t.id)}
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '0.6rem',
+                                                padding: '0.7rem 0.9rem',
+                                                borderRadius: '8px',
+                                                border: `2px solid ${galleryTheme === t.id ? t.color : 'var(--color-border)'}`,
+                                                background: galleryTheme === t.id ? `${t.color}20` : 'transparent',
+                                                cursor: 'pointer',
+                                                transition: 'all 0.2s ease',
+                                                textAlign: 'left',
+                                                fontFamily: 'var(--font-sans)'
+                                            }}
+                                        >
+                                            <div style={{
+                                                width: '22px', height: '22px', borderRadius: '50%', flexShrink: 0,
+                                                background: `linear-gradient(135deg, ${t.bg}, ${t.color})`,
+                                                border: '1px solid rgba(0,0,0,0.1)'
+                                            }} />
+                                            <div>
+                                                <p style={{ fontSize: '0.78rem', fontWeight: '600', color: 'var(--color-text)', lineHeight: 1.2 }}>{t.label}</p>
+                                                <p style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', lineHeight: 1.2 }}>{t.description}</p>
+                                            </div>
+                                        </motion.button>
                                     ))}
                                 </div>
-                                <button className="btn btn-primary" style={{ width: '100%', fontSize: '0.8rem', padding: '0.8rem' }}>
-                                    Manage Themes
-                                </button>
+                                {galleryTheme && (
+                                    <button
+                                        onClick={() => setGalleryTheme(galleryTheme)}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.7rem',
+                                            border: '1px solid var(--color-border)',
+                                            borderRadius: '6px',
+                                            fontSize: '0.78rem',
+                                            color: 'var(--color-text-muted)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: '0.4rem',
+                                            cursor: 'pointer',
+                                            background: 'transparent'
+                                        }}
+                                    >
+                                        <RotateCcw size={13} /> Reset to Default
+                                    </button>
+                                )}
                             </div>
 
                             <h3 style={{ marginBottom: '1.5rem', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
